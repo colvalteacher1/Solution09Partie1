@@ -1,0 +1,9 @@
+@Solution09Partie1_HostAddress = http://localhost:5030
+
+GET {{Solution09Partie1_HostAddress}}/api/numero1/celsius/35
+Accept: application/json
+
+###
+
+GET {{Solution09Partie1_HostAddress}}/api/numero1/fdsjk/30
+Accept: application/json
