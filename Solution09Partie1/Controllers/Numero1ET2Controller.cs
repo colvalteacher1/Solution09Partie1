@@ -5,11 +5,12 @@ namespace Solution09Partie1.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Numero1Controller : ControllerBase
+    public class Numero1ET2Controller : ControllerBase
     {
         //conversion temperature Fahrenheit <-> Celsius
 
-        [HttpGet("{sensConvert}/{tempValue}")]
+        [HttpGet]
+        [Route("num1/{sensConvert}/{tempValue}")]
         public IActionResult ConvertTemp(string sensConvert, string tempValue)
         {
             if (string.IsNullOrEmpty(sensConvert.Trim()) || (sensConvert.ToLower() != "celsius" && sensConvert.ToLower() != "fahrenheit"))
@@ -18,21 +19,29 @@ namespace Solution09Partie1.Controllers
             if (!int.TryParse(tempValue, out var tempValueInt))
                 return BadRequest("Faites attention il faut une valeur numérique pour la température");
 
-            if(sensConvert.ToLower() == "fahrenheit")
+            if (sensConvert.ToLower() == "fahrenheit")
             {
-                var fah = (tempValueInt * 9   + 160 ) / 5;
+                var fah = (tempValueInt * 9 + 160) / 5;
                 return Ok($"{tempValueInt} celsius => {fah} fahrenheit");
             }
 
             if (sensConvert.ToLower() == "celsius")
             {
-                var cel = (float) (5 * (tempValueInt -32)) / 9;
+                var cel = (float)(5 * (tempValueInt - 32)) / 9;
                 return Ok($"{tempValueInt} fahrenheit => {cel.ToString("F1")} celsius");
             }
 
             return BadRequest("Quelque chose va mal");
 
         }
-        
+
+
+        [HttpGet]
+        [Route("num2/{date}")]
+        public IActionResult GetTempFromDate(string date)
+        {
+
+        }
+    
     }
 }
