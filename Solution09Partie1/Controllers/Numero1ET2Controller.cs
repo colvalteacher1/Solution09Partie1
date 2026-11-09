@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Solution09Partie1.Utils;
+using System.Globalization;
 
 namespace Solution09Partie1.Controllers
 {
@@ -40,7 +42,25 @@ namespace Solution09Partie1.Controllers
         [Route("num2/{date}")]
         public IActionResult GetTempFromDate(string date)
         {
+            var parseDate = Utils.Utils.ParseDateFromString(date);
+            if (parseDate == null)
+                return BadRequest("Faites attention le format de la date est inconnu");
 
+            Random random = new Random();
+            int currentYear = parseDate.Value.Year;
+            string format = "dd-MM-yyyy";
+
+            if (parseDate >= DateOnly.ParseExact($"22-03-{currentYear}", format, CultureInfo.InvariantCulture) && parseDate <= DateOnly.ParseExact($"21-06-{currentYear}", format, CultureInfo.InvariantCulture)) // spring
+                return Ok($"Saison: printemps, Date: {parseDate} , Température en cours {random.NextInt64(5, 25)}"); ;
+
+            if (parseDate >= DateOnly.ParseExact($"22-06-{currentYear}", format, CultureInfo.InvariantCulture) && parseDate <= DateOnly.ParseExact($"21-09-{currentYear}", format, CultureInfo.InvariantCulture)) // summer
+                return Ok($"Saison: été, Date: {parseDate} , Température en cours {random.NextInt64(10, 35)}"); ;
+
+            if (parseDate >= DateOnly.ParseExact($"22-09-{currentYear}", format, CultureInfo.InvariantCulture) && parseDate <= DateOnly.ParseExact($"21-12-{currentYear}", format, CultureInfo.InvariantCulture)) // fall
+                return Ok($"Saison: automne, Date: {parseDate} , Température en cours {random.NextInt64(-10, 15)}"); ;
+
+            // winter
+                return Ok($"Saison: hiver, Date: {parseDate} , Température en cours {random.NextInt64(-20, 15)}"); ;
         }
     
     }

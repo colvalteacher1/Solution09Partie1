@@ -4,7 +4,7 @@ namespace Solution09Partie1.Utils
 {
     public class Utils
     {
-        public static DateTime? ParseDateFromString(string input)
+        public static DateOnly? ParseDateFromString(string input)
         {
             string[] allowedFormats = { "yyyyMMdd", "yyyy-MM-dd", "dd-MM-yyyy" };
 
@@ -17,7 +17,7 @@ namespace Solution09Partie1.Utils
             );
 
             if ( isValid )
-                return parsedDate;
+                return DateOnly.FromDateTime(parsedDate);
             else
                 return null;
         }
